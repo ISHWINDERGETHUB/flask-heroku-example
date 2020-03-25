@@ -5,13 +5,12 @@ from flask import Flask, request, jsonify
 import pandas as pd
 import numpy as np
 import pandas as pd
-import gunicorn.app.base
 import mysql.connector
 from datetime import datetime
 #     import jsonify from flask
 app= Flask(__name__)
-@app.route('/<district>')
-def shool_dash_map_table(district):
+@app.route('/')
+def shool_dash_map_table():
     db = mysql.connector.connect(
     host="18.237.223.197",
     user="IE-tech",
@@ -24,7 +23,7 @@ def shool_dash_map_table(district):
    left join audio_track_detail atd on um.user_id=atd.user_id
    left join login_logs ll on um.user_id=ll.user_id
    where um.user_name not like '%TEST%' and um.IS_DISABLED != 'Y' and um.IS_BLOCKED != 'Y' and sm.name not like '%blocked%'
-   and um.INCOMPLETE_SIGNUP != 'Y' and um.district_name like '%"""+district+"""%'
+   and um.INCOMPLETE_SIGNUP != 'Y' and um.district_name like '%youngstown%'
    group by um.user_id) x
    left join 
    (SELECT um.USER_ID as id1,count(atd.user_id) as practice_count12
@@ -33,7 +32,7 @@ def shool_dash_map_table(district):
    left join audio_track_detail atd on um.user_id=atd.user_id
    left join login_logs ll on um.user_id=ll.user_id
    where um.user_name not like '%TEST%' and um.IS_DISABLED != 'Y' and um.IS_BLOCKED != 'Y' and sm.name not like '%blocked%' and date(atd.MODIFIED_DATE) > '2019-07-31'
-   and um.INCOMPLETE_SIGNUP != 'Y' and um.district_name like '%"""+district+"""%'
+   and um.INCOMPLETE_SIGNUP != 'Y' and um.district_name like '%youngstown%'
    group by um.user_id) y
    
    on x.USER_ID=y.id1"""
