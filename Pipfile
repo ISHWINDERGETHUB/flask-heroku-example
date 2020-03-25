@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 gunicorn = "*"
 flask = "*"
+path.py ="*"
+Flask-RESTful ="*"
+
 
 [dev-packages]
 
